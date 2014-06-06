@@ -59,7 +59,11 @@ package {
     require => [Package["oracle-java6-installer","cassandra"],Exec["uk-mirror","apt-get update","accept-java-license","add-datastax-key"],Apt::Source["datastax"]];
 }
 
-#service { "apache2":
-#  ensure  => "running",
-#  require => Package["apache2"],
-#}
+service { "cassandra":
+ ensure  => "stopped",
+ require => Package["cassandra"],
+}
+
+tidy { "cassandra-system":
+   path => "/var/lib/cassandra/data/system/*",
+}
